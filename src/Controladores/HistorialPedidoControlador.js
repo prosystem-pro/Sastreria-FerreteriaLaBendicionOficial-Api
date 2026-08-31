@@ -307,7 +307,7 @@ const ListadoEntregados = async (req, res) => {
 
     return ResponderExito(
       res,
-      'Listado de pedidos entregados obtenido correctamente.',
+      'Listado de pedidos cancelados obtenido correctamente.',
       Objeto || []
     );
 
@@ -316,7 +316,7 @@ const ListadoEntregados = async (req, res) => {
     return ManejarError(
       error,
       res,
-      'Error al obtener los pedidos entregados'
+      'Error al obtener los pedidos cancelados'
     );
 
   }

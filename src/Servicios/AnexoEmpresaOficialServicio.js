@@ -95,7 +95,7 @@ const ListadoPedidoPedidoEmpresaOficial = async ({ CodigoUsuario, CodigoRol }) =
                     attributes: ['CodigoEstadoPedido', 'NombreEstadoPedido'],
                     where: {
                         NombreEstadoPedido: {
-                            [Op.notIn]: ['ENTREGADO', 'VENDIDO']
+                            [Op.notIn]: ['CANCELADO', 'VENDIDO']
                         }
                     }
                 },

@@ -401,7 +401,7 @@ const ActualizarPedido = async (datos, usuario, NombreRol) => {
         let fechaEntrega = null;
 
         // SI ES ENTREGADO
-        if (nombreEstado === 'ENTREGADO') {
+        if (nombreEstado === 'CANCELADO') {
 
             // ignorar fecha enviada por frontend
             fechaEntrega = new Date();
@@ -1933,7 +1933,7 @@ const ListadoEntregados = async (CodigoEmpresa, SuperAdmin, NombreEmpresa, verOt
                     as: 'CaEstadoPedido',
                     attributes: ['CodigoEstadoPedido', 'NombreEstadoPedido'],
                     where: {
-                        NombreEstadoPedido: 'ENTREGADO'
+                        NombreEstadoPedido: 'CANCELADO'
                     }
                 },
                 {
@@ -2058,7 +2058,7 @@ const Listado = async (CodigoEmpresa, SuperAdmin, NombreEmpresa, verOtros = fals
                     attributes: ['CodigoEstadoPedido', 'NombreEstadoPedido'],
                     where: {
                         NombreEstadoPedido: {
-                            [Op.notIn]: ['ENTREGADO', 'VENDIDO']
+                            [Op.notIn]: ['CANCELADO', 'VENDIDO']
                         }
                     }
                 },
@@ -2484,7 +2484,7 @@ const ListadoEstadoPedido = async () => {
             order: [
                 [
                     literal(`CASE 
-                        WHEN NombreEstadoPedido = 'ENTREGADO' THEN 1 
+                        WHEN NombreEstadoPedido = 'CANCELADO' THEN 1 
                         ELSE 0 
                     END`),
                     'ASC'
