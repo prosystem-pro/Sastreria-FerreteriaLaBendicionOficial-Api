@@ -304,8 +304,7 @@ const ActualizarProductoInventario = async (CodigoInventario, Datos, CodigoUsuar
         if (!CodigoTalla)
             LanzarError('Talla es requerida', 400);
 
-        if (!CodigoColor)
-            LanzarError('Color es requerido', 400);
+
 
         Precio = NormalizarPrecio(Precio);
         PrecioCosto = NormalizarPrecio(PrecioCosto);
