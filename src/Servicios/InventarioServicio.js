@@ -128,10 +128,7 @@ const CrearProductoInventario = async (Datos, CodigoUsuario) => {
             LanzarError('Diseño es requerido', 400);
 
         if (!CodigoTalla)
-            LanzarError('Talla es requerida', 400);
-
-        if (!CodigoColor)
-            LanzarError('Color es requerido', 400);
+            LanzarError('Ubicacion es requerida', 400);
 
         Precio = NormalizarPrecio(Precio);
         PrecioCosto = NormalizarPrecio(PrecioCosto);
