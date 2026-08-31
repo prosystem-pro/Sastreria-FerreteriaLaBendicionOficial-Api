@@ -766,7 +766,7 @@ const GenerarPDFPedido = async (CodigoPedido, res) => {
 
         doc.text(`Fecha: ${fechaPedido}`, 320, inicioY + 40);
         doc.text(`Atendió: ${pedido.NombreUsuario}`, 320, inicioY + 55);
-        doc.text(`Fecha Entrega: ${fechaEntrega}`, 320, inicioY + 70);
+        doc.text(`Vencimiento: ${fechaEntrega}`, 320, inicioY + 70);
 
 
         // ================= TABLA PRODUCTOS =================
@@ -1024,7 +1024,7 @@ const GenerarPDFPagoPedido = async (CodigoPago, res) => {
         doc.text(`Celular: ${cliente.Celular || ''}`, 50, inicioY + 85);
         doc.text(`Fecha Pago: ${fechaPago}`, 320, inicioY + 40);
         doc.text(`Atendido: ${pedido.NombreUsuario}`, 320, inicioY + 55);
-        doc.text(`Fecha Entrega: ${fechaEntrega}`, 320, inicioY + 70);
+        doc.text(`Vencimiento: ${fechaEntrega}`, 320, inicioY + 70);
 
         // ================= NO. PEDIDO =================
         let totalesY = inicioY + altoTabla + 10;
