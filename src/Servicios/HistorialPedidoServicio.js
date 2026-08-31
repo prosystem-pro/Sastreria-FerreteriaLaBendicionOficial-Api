@@ -839,11 +839,8 @@ const GenerarPDFPedido = async (CodigoPedido, res) => {
 
 
         const descuentoBruto = (pedido.Subtotal * pedido.Descuento) / 100;
-        const descuentoValor = aproximarSegunRegla(descuentoBruto);
-
         doc.text(`Descuento (${pedido.Descuento}%):`, xLabel, totalesY);
-
-        doc.text(`Q ${descuentoValor.toFixed(2)}`, xMonto, totalesY, { width: anchoMonto, align: 'right' });
+        doc.text(`Q ${descuentoBruto.toFixed(2)}`, xMonto, totalesY, { width: anchoMonto, align: 'right' });
 
         totalesY += 15;
 
@@ -2242,7 +2239,7 @@ const ListadoTipoProducto = async (NombreRol) => {
 
     } catch (error) {
 
-throw error;
+        throw error;
     }
 };
 const ListadoProducto = async (CodigoTipoProducto = null) => {
@@ -2303,7 +2300,7 @@ const ListadoProducto = async (CodigoTipoProducto = null) => {
         return resultado;
 
     } catch (error) {
-throw error;
+        throw error;
     }
 };
 const ListadoVariacionesProducto = async (CodigoProducto) => {
@@ -2368,7 +2365,7 @@ const ListadoVariacionesProducto = async (CodigoProducto) => {
         };
 
     } catch (error) {
-throw error;
+        throw error;
     }
 };
 const ListadoTipoTela = async () => {
@@ -2397,7 +2394,7 @@ const ListadoTipoTela = async () => {
 
     } catch (error) {
 
-throw error;
+        throw error;
 
     }
 
@@ -2427,7 +2424,7 @@ const ListadoTela = async () => {
         }));
 
     } catch (error) {
-throw error;
+        throw error;
 
     }
 
@@ -2458,7 +2455,7 @@ const ListadoTipoCuello = async () => {
 
     } catch (error) {
 
-throw error;
+        throw error;
 
     }
 
@@ -2500,7 +2497,7 @@ const ListadoEstadoPedido = async () => {
         }));
 
     } catch (error) {
-throw error;
+        throw error;
 
     }
 
@@ -2575,7 +2572,7 @@ const ObtenerProducto = async (codigoProducto, codigoTela = null, codigoTipoTela
         };
 
     } catch (error) {
-throw error;
+        throw error;
     }
 };
 const ListadoCliente = async (CodigoEmpresa, SuperAdmin) => {
@@ -2611,7 +2608,7 @@ const ListadoCliente = async (CodigoEmpresa, SuperAdmin) => {
 
     } catch (error) {
 
-throw error;
+        throw error;
 
     }
 
@@ -2635,7 +2632,7 @@ const ListadoFormaPago = async () => {
         }));
 
     } catch (error) {
-throw error;
+        throw error;
     }
 };
 
