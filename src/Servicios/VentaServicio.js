@@ -136,7 +136,7 @@ const ObtenerDatosImpresion = async (CodigoPedido) => {
                 nit: empresa.NIT,
                 direccion: empresa.Direccion,
                 telefono: empresa.Telefono,
-                logo: '/public/LofoFactura.jpeg'
+                logo: '/public/LogoFactura.png'
             },
 
             cliente: {
@@ -744,7 +744,7 @@ const GenerarPDFVenta = async (CodigoPedido, res) => {
         // ================= LOGO =================
         const logoPath = path.join(
             __dirname,
-            '../public/LofoFactura.jpeg'
+            '../public/LogoFactura.png'
         );
 
         if (fs.existsSync(logoPath)) {
@@ -763,7 +763,8 @@ const GenerarPDFVenta = async (CodigoPedido, res) => {
 
         doc.font('Helvetica')
             .fontSize(10)
-            .text(`NIT: ${empresa.NIT}`, 40, 70)
+            // .text(`NIT: ${empresa.NIT}`, 40, 70)
+            .text(`Venta de materiales de construcción y más..`, 40, 70)
             .text(`Dirección: ${empresa.Direccion}`, 40, 85)
             .text(`Teléfono: ${empresa.Telefono}`, 40, 100);
 

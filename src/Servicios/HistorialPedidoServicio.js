@@ -705,7 +705,7 @@ const GenerarPDFPedido = async (CodigoPedido, res) => {
         // ================= LOGO =================
         const logoPath = path.join(
             __dirname,
-            '../public/LofoFactura.jpeg'
+            '../public/LogoFactura.png'
         );
 
         if (fs.existsSync(logoPath)) {
@@ -724,7 +724,8 @@ const GenerarPDFPedido = async (CodigoPedido, res) => {
 
         doc.font('Helvetica')
             .fontSize(10)
-            .text(`NIT: ${empresa.NIT}`, 40, 70)
+            // .text(`NIT: ${empresa.NIT}`, 40, 70)
+            .text(`Venta de materiales de construcción y más..`, 40, 70)
             .text(`Dirección: ${empresa.Direccion}`, 40, 85)
             .text(`Teléfono: ${empresa.Telefono}`, 40, 100);
 
@@ -981,7 +982,7 @@ const GenerarPDFPagoPedido = async (CodigoPago, res) => {
         // ================= LOGO =================
         const logoPath = path.join(
             __dirname,
-            '../public/LofoFactura.jpeg'
+            '../public/LogoFactura.png'
         );
 
         if (fs.existsSync(logoPath)) {
@@ -995,7 +996,8 @@ const GenerarPDFPagoPedido = async (CodigoPago, res) => {
         doc.fillColor('black')
             .font('Helvetica-Bold').fontSize(18).text(empresa.NombreEmpresa, 40, 40);
         doc.font('Helvetica').fontSize(10)
-            .text(`NIT: ${empresa.NIT}`, 40, 70)
+            // .text(`NIT: ${empresa.NIT}`, 40, 70)
+            .text(`Venta de materiales de construcción y más..`, 40, 70)
             .text(`Dirección: ${empresa.Direccion}`, 40, 85)
             .text(`Teléfono: ${empresa.Telefono}`, 40, 100);
 
@@ -1149,7 +1151,7 @@ const ObtenerDatosImpresionPagoPedido = async (CodigoPago) => {
                 nit: empresa.NIT,
                 direccion: empresa.Direccion,
                 telefono: empresa.Telefono,
-                logo: '/public/LofoFactura.jpeg'
+                logo: '/public/LogoFactura.png'
             },
 
             cliente: {
