@@ -11,7 +11,7 @@ const { UTCAGuatemala_FechaHora,
 
 const { PedidoModelo, ClienteModelo, EstadoPedidoModelo, UsuarioModelo,
     ProductoModelo, PedidoDetalleModelo, InventarioModelo, PedidoDetalleMedidaModelo,
-    TipoProductoModelo, TipoMedidaModelo, PagoModelo, PagoAplicacionModelo, TipoTelaModelo,
+    TipoProductoModelo, TipoMedidaModelo, PagoModelo, PagoAplicacionModelo, TipoTelaModelo, EstiloModelo,
     TelaModelo, MovimientoInventarioModelo } = require('../Relaciones/Relaciones');
 
 const EmpresaModelo = require('../Modelos/Empresa')(BaseDatos, Sequelize.DataTypes);
@@ -600,6 +600,43 @@ const GenerarPDFPedido = async (CodigoPedido, res) => {
         // ================= PEDIDO =================
         const pedido = await ObtenerPedido(Number(CodigoPedido));
 
+        const detallesPDF = await PedidoDetalleModelo.findAll({
+            where: {
+                CodigoPedido,
+                Estatus: 1
+            },
+            attributes: ['CodigoPedidoDetalle', 'CodigoInventario', 'Cantidad', 'Subtotal'],
+            include: [
+                {
+                    model: InventarioModelo,
+                    as: 'Inventario',
+                    attributes: ['CodigoInventario'],
+                    include: [
+                        {
+                            model: ProductoModelo,
+                            as: 'Producto',
+                            attributes: ['NombreProducto']
+                        },
+                        {
+                            model: EstiloModelo,
+                            as: 'Estilo',
+                            attributes: ['NombreEstilo']
+                        }
+                    ]
+                }
+            ],
+            order: [['CodigoPedidoDetalle', 'ASC']]
+        });
+
+        const productosPDF = detallesPDF.map(detalle => ({
+            NombreProducto: [
+                detalle.Inventario?.Producto?.NombreProducto || '',
+                detalle.Inventario?.Estilo?.NombreEstilo || ''
+            ].filter(Boolean).join(' '),
+            Cantidad: detalle.Cantidad,
+            Subtotal: Number(detalle.Subtotal)
+        }));
+
 
         // ================= CLIENTE =================
         const cliente = await ClienteModelo.findOne({
@@ -773,7 +810,7 @@ const GenerarPDFPedido = async (CodigoPedido, res) => {
         // ================= TABLA PRODUCTOS =================
         let y = inicioY + 150;
         let altoFila = 20;
-        let alturaProductos = (pedido.Productos.length + 1) * altoFila;
+        let alturaProductos = (productosPDF.length + 1) * altoFila;
 
         doc.roundedRect(40, y, 510, alturaProductos, 6).stroke();
 
@@ -797,7 +834,7 @@ const GenerarPDFPedido = async (CodigoPedido, res) => {
 
         doc.font('Helvetica').fontSize(10);
 
-        pedido.Productos.forEach(prod => {
+        productosPDF.forEach(prod => {
 
             doc.moveTo(40, y)
                 .lineTo(550, y)
