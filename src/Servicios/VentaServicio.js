@@ -11,6 +11,7 @@ const FormaPago = require('../Modelos/FormaPago')(BaseDatos, Sequelize.DataTypes
 const {
     InventarioModelo: InventarioRelacion,
     ProductoModelo: ProductoRelacion,
+    EstiloModelo,
     PedidoModelo,
     PedidoDetalleModelo,
     PagoModelo,
@@ -129,7 +130,7 @@ const ObtenerDatosImpresion = async (CodigoPedido) => {
         const SaldoPendiente = Total - Abono;
 
         // ================= RETORNO FINAL =================
-        return {
+        const DatosImpresion = {
 
             empresa: {
                 nombre: empresa.NombreEmpresa,
@@ -161,6 +162,7 @@ const ObtenerDatosImpresion = async (CodigoPedido) => {
             productos: venta.Productos.map(p => ({
                 cantidad: p.Cantidad,
                 nombre: p.NombreProducto,
+                NombreEstilo: p.NombreEstilo,
                 subtotal: p.Subtotal
             })),
 
@@ -177,6 +179,8 @@ const ObtenerDatosImpresion = async (CodigoPedido) => {
             }
 
         };
+
+        return DatosImpresion;
 
     } catch (error) {
 
@@ -241,6 +245,11 @@ const ObtenerVenta = async (CodigoPedido) => {
 
                             include: [
                                 {
+                                    model: EstiloModelo,
+                                    as: 'Estilo',
+                                    attributes: ['NombreEstilo']
+                                },
+                                {
                                     model: ProductoRelacion,
                                     as: 'Producto',
                                     attributes: [
@@ -272,6 +281,7 @@ const ObtenerVenta = async (CodigoPedido) => {
 
             NombreProducto:
                 item.Inventario?.Producto?.NombreProducto || 'Producto',
+            NombreEstilo: item.Inventario?.Estilo?.NombreEstilo || '',
 
             Cantidad: item.Cantidad,
 
@@ -850,9 +860,14 @@ const GenerarPDFVenta = async (CodigoPedido, res) => {
                 align: 'center'
             });
 
-            doc.text(prod.NombreProducto, 150, y + 5, {
-                width: 220
-            });
+            doc.text(
+                [prod.NombreProducto, prod.NombreEstilo].filter(Boolean).join(' '),
+                150,
+                y + 5,
+                {
+                    width: 220
+                }
+            );
 
             doc.text(
                 `Q ${prod.Subtotal.toFixed(2)}`,
